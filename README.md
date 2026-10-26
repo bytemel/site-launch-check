@@ -2,6 +2,8 @@
 
 Run 20 pre-launch checks against any URL and get a PASS, WARN or FAIL table in a few seconds. For developers and agencies shipping small business sites, and for anyone who wants a quick "is this ready?" before telling a client it is live.
 
+**Try it in the browser: [site-launch-check.vercel.app](https://site-launch-check.vercel.app)** (paste any public address; reports get a share link for 30 days)
+
 ```sh
 node bin/site-launch-check.mjs https://example.com
 ```
@@ -96,6 +98,17 @@ A check shows SKIP when it cannot apply, for example mixed content on a page tha
 - `lib/judge.js` has one pure function per check. They take facts and return a status, so each rule is tested without a network.
 - `lib/run.js` gathers the facts for one URL and calls the judges in order. `lib/report.js` prints the table or JSON.
 - Tests run two local `node:http` sites, one built right and one with every mistake on the list, plus unit tests for the tokenizer and the judges.
+
+## The web version
+
+The same `runChecks` runs behind [site-launch-check.vercel.app](https://site-launch-check.vercel.app), on Vercel Functions with [Neon](https://neon.tech) Postgres for share links and rate limits.
+
+- `web/` is the page, `api/check.js` runs a check, `api/report.js` reads a saved one.
+- A server that fetches any URL you give it can be pointed at its own network. `lib/guard.js` wraps `fetch` and refuses other schemes, ports other than 80 and 443, and any host that resolves to a private, loopback, link-local or cloud metadata address. It runs on every redirect hop, and caps one run at 160 requests. The CLI does not use it: on your own machine, checking `localhost` is the point.
+- Limits: 6 checks per 10 minutes per visitor, 400 a day for the whole demo, reports deleted after 30 days.
+- `@neondatabase/serverless` is a dev dependency, used only by the web routes, so the CLI still installs with no dependencies.
+
+To run your own: import the repo on Vercel, add Neon from the Marketplace (it sets `DATABASE_URL`), deploy. The app creates its `site_launch_check` tables on first request.
 
 ## Limits
 

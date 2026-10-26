@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Site Launch Check: 20 checks before you share the link</title>
+  <meta name="description" content="Paste a website address and run 20 pre-launch checks: HTTPS, titles, social images, robots.txt and sitemap, the 404 page, mixed content, heavy images, broken links and security headers. Free, open source.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232a4fa8'/%3E%3Cpath d='M9 16.5l4.5 4.5L23 11' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/app.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="wrap">
+      <p class="crumb"><a href="/">Site Launch Check</a></p>
+      <h1>20 checks before you share the link</h1>
+      <p class="lead">The things that embarrass a launch: no preview image on WhatsApp, a 404 page that says 200, a sitemap Google cannot read, a 4 MB hero photo. Paste an address and see them all in about 20 seconds.</p>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <form id="run" class="card run">
+      <label for="url" class="visually-hidden">Website address</label>
+      <input id="url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="yoursite.co.ke" required maxlength="300">
+      <button class="btn btn-primary" type="submit" id="go">Run 20 checks</button>
+      <p class="hint full">Try <button type="button" class="linkish" data-try="https://timmwangi.com">timmwangi.com</button> or <button type="button" class="linkish" data-try="https://example.com">example.com</button>. Public websites only. Reports are saved for 30 days so you can share them.</p>
+    </form>
+    <p id="status" class="notice" role="status" hidden></p>
+
+    <section id="report" hidden aria-labelledby="report-h">
+      <div class="head-row">
+        <h2 id="report-h"></h2>
+        <div class="actions"><button class="btn" type="button" id="share">Copy share link</button><a class="btn" id="again" href="/">Check another site</a></div>
+      </div>
+      <p class="hint" id="report-sub"></p>
+      <div class="tally" id="tally"></div>
+      <ol class="checks" id="checks"></ol>
+    </section>
+
+    <section class="card">
+      <h2>Run it in your terminal</h2>
+      <p>The same 20 checks, zero dependencies, also against <code>localhost</code>:</p>
+      <pre><code>npx github:bytemel/site-launch-check https://yoursite.co.ke</code></pre>
+      <p class="hint">Add <code>--json</code> for CI. It exits 1 when any check fails, so a pipeline can stop a bad launch.</p>
+    </section>
+  </main>
+  <footer class="wrap foot">
+    <p>Open source: <a href="https://github.com/bytemel/site-launch-check">github.com/bytemel/site-launch-check</a>. Built by <a href="https://timmwangi.com">Timothy Mwangi</a>.</p>
+  </footer>
+</body>
+</html>
